@@ -1,7 +1,5 @@
-# Black Jack Project - OOPL Final Project
+# Black Jack Project 
 # Created by Danley Nemorin
-# 5/13/2017
-# Spring Semester...
 
 
 
