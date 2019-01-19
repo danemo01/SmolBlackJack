@@ -150,7 +150,7 @@ class showFundsFrame(Frame):
 		sff = Toplevel(self)
 		sff.title("Your Funds!")
 		label = tk.Label(sff, text="Your fund is: " + str(BlackJackMenu.funds))
-		buttonClose =tk.Button(sff, text = "Close", width = 20, command = self.close_window)
+		buttonClose = tk.Button(sff, text = "Close", width = 20, command = self.close_window)
 
 		label.pack()
 		buttonClose.pack()
