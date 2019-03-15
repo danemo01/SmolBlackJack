@@ -170,6 +170,94 @@ class resetFunds(Frame):
         self.destroy()
 
 
+#THE GAME FRAME
+class blackJackGameFrame(Frame):
+       def __init__(self):
+               gameFrame = tk.Frame.__init__(self)
+               gameFrame = Toplevel(self)
+               gameFrame.title("BLACK JACK!")
+               self.labelCard1 = tk.Label(gameFrame, text ="Card 1")
+               self.labelCard2 = tk.Label(gameFrame, text = "Card 2")
+               self.labelCard3 = tk.Label(gameFrame, text = "Result")
+               buttonDeal = tk.Button(gameFrame, text = "Deal!", command = self.deal)
+
+               self.labelCard1.pack(side = TOP)
+               self.labelCard2.pack(side = TOP)
+               self.labelCard3.pack(pady = 5)
+               buttonDeal.pack(padx = 86, pady = 10)
+
+               self.cardList = generateCardList()
+               self.score = 0
+               
+       def giveRandomCard(self):
+                element1 = random.randint(0,3)
+                element2 = random.randint(0,element1)
+                card = self.cardList[element1][element2]
+
+                self.cardList[element1].remove(card)
+                
+                return card
+                
+        
+
+       def deal(self):
+                card1 = self.giveRandomCard()
+                card2 = self.giveRandomCard()
+
+                self.labelCard1.config(text= card1.number + " of " + card1.suit)
+                self.labelCard2.config(text= card2.number + " of " + card2.suit)
+
+                self.score += card1.value + card2.value
+                print(self.score)
+
+                if self.score == 21:
+                        box.showinfo('YA WON', "CHING CHING YA WON 100$")
+                        self.labelCard3.config(text= "You have " + str(self.score) + " points!")
+                        BlackJackMenu.funds += 100
+                elif self.score < 21:
+                        self.labelCard3.config(text= "You have " + str(self.score) + " points!")
+                        #lower value change some stuff
+                elif self.score > 21:
+                        box.showinfo('Haha', "YA LOST, 50$ GONE")
+                        BlackJackMenu.funds -= 50
+                        self.destroy()
+
+                        if BlackJackMenu.funds < 0:
+                                box.showinfo('oh..', "You have no money.. you lost bye!")
+                                self.quit()                
+
+                
+# show Funds Frame            
+class showFundsFrame(Frame):
+	def __init__(self):
+		sff = tk.Frame.__init__(self)
+		sff = Toplevel(self)
+		sff.title("Your Funds!")
+		label = tk.Label(sff, text="Your fund is: " + str(BlackJackMenu.funds))
+		buttonClose = tk.Button(sff, text = "Close", width = 20, command = self.close_window)
+
+		label.pack()
+		buttonClose.pack()
+	
+
+	def close_window(self):
+		self.destroy()
+# reset funds frame
+class resetFunds(Frame):
+       def __init__(self):
+	       rsFrame = tk.Frame.__init__(self)
+	       rsFrame = Toplevel(self)
+	       rsFrame.title("Reset Funds")
+
+	       label = tk.Label (rsFrame, text="Your funds are: " +  str(BlackJackMenu.funds) + "$, are you sure you want to reset it?")
+	       buttonYes = tk.Button(rsFrame, text = "Yes I want to delete them", command = self.resetTheFunds)
+	       label.pack()
+	       buttonYes.pack()
+	       
+       def resetTheFunds(self):
+                BlackJackMenu.funds = 1000
+                self.destroy()
+                
 def main():
     BlackJackMenu().mainloop()
 
